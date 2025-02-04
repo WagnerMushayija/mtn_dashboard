@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTN-Inspired Webpage</title>
+    <link rel="stylesheet" href="/style/style.css">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav>
+    <div class="logo">
+        <img src="/assets/logo.jpg" alt="MTN Logo">
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="container">
+    <!-- Left Sidebar -->
+    <div class="sidebar">
+        <ul>
+            <li id="search-menu">
+                <a href="#">Search</a>
+                <ul class="submenu">
+                    <li><a href="#" onclick="showContent('Date')">Date</a></li>
+                    <li><a href="#" onclick="showContent('Amount')">Amount</a></li>
+                    <li><a href="#" onclick="showContent('Transaction Type')">Transaction Type</a></li>
+
+                </ul>
+            </li>
+            <li><a href="#" onclick="showContent('Report')">Report</a></li>
+            <li><a href="#" onclick="showContent('help')">Help</a></li>
+        </ul>
+    </div>
+
+
+    <!-- Right Content -->
+    <div class="content">
+        <div id="search-content" class="content-section">
+            <input type="text" id="search-input" placeholder="Enter your search...">
+            <button onclick="performSearch()">Search</button>
+            <div id="search-results">
+                <!-- Table Title -->
+                <h3 id="results-title" style="display: none;">Search Results</h3>
+
+                <!-- Table Structure -->
+                <table id="results-table" style="display: none;">
+                    <thead>
+                    <tr>
+                        <th>Transaction ID</th>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Sender</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Rows will be dynamically added here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="settings-content" class="content-section" style="display: none;">
+            <h2>Settings</h2>
+            <p>This is the settings section.</p>
+        </div>
+        <div id="help-content" class="content-section" style="display: none;">
+            <h2>Help</h2>
+            <p>This is the help section.</p>
+        </div>
+    </div>
+</div>
+
+<script src="/style/script.js"></script>
+</body>
+</html>
