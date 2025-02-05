@@ -178,3 +178,41 @@ button:hover {
     color: #00688f; /* Blue */
     margin-bottom: 10px;
 }
+
+.chart-container {
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container h3 {
+    margin-bottom: 20px;
+    color: #0033a0; /* Blue */
+}
+
+/* Chart Container Styling */
+.chart-container {
+    margin-bottom: 20px; /* Reduce margin */
+    padding: 10px; /* Reduce padding */
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 80%; /* Set a fixed width for the container */
+    max-width: 600px; /* Limit maximum width */
+    margin-left: auto;
+    margin-right: auto; /* Center the container */
+}
+
+.chart-container h3 {
+    margin-bottom: 10px; /* Reduce margin */
+    color: #0033a0; /* Blue */
+    font-size: 18px; /* Smaller font size */
+}
+
+/* Canvas Styling */
+canvas {
+    width: 100% !important; /* Make canvas responsive */
+    height: 300px !important; /* Set a fixed height */
+}

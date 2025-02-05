@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MTN-Inspired Webpage</title>
     <link rel="stylesheet" href="/style/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -61,9 +62,26 @@
                 </table>
             </div>
         </div>
-        <div id="settings-content" class="content-section" style="display: none;">
-            <h2>Settings</h2>
-            <p>This is the settings section.</p>
+        <div id="report-content" class="content-section" style="display: none;">
+            <h2>Reports</h2>
+
+            <!-- Graph 1: Total Transaction Volume by Type -->
+            <div class="chart-container">
+                <h3>Total Transaction Volume by Type</h3>
+                <canvas id="transactionVolumeChart"></canvas>
+            </div>
+
+            <!-- Graph 2: Monthly Transaction Summary -->
+            <div class="chart-container">
+                <h3>Monthly Transaction Summary</h3>
+                <canvas id="monthlySummaryChart"></canvas>
+            </div>
+
+            <!-- Graph 3: Top 5 Transactions -->
+            <div class="chart-container">
+                <h3>Top 5 Transactions</h3>
+                <canvas id="topTransactionsChart"></canvas>
+            </div>
         </div>
         <div id="help-content" class="content-section" style="display: none;">
             <h2>Help</h2>
