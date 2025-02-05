@@ -1,191 +1,230 @@
-// Function to show the selected content section
-function showContent(section) {
-    // Hide all content sections
-    document.querySelectorAll('.content-section').forEach((el) => {
-        el.style.display = 'none';
-    });
+// Navigation
+const navLinks = document.querySelectorAll("nav a")
+const sections = document.querySelectorAll("main section")
 
-    // Show the selected content section
-    if (section === 'Date' || section === 'Amount' || section === 'Transaction Type') {
-        // Ensure the search bar is visible for search-related sections
-        document.getElementById('search-content').style.display = 'block';
-    } else {
-        document.getElementById(`${section.toLowerCase()}-content`).style.display = 'block';
+navLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+        e.preventDefault()
+        navLinks.forEach((l) => l.classList.remove("active"))
+        link.classList.add("active")
+        sections.forEach((s) => s.classList.remove("active"))
+        document.querySelector(link.getAttribute("href")).classList.add("active")
+    })
+})
+
+// Charts
+// Import Chart.js
+// Assuming Chart.js is included in your HTML file via a <script> tag
+// If not, include it before this script.js file.
+
+const transactionTypeChart = new Chart(document.getElementById("transactionTypeChart"), {
+    type: "doughnut",
+    data: {
+        labels: ["Mobile Transfer", "Bank Transfer", "Cash"],
+        datasets: [
+            {
+                data: [300, 150, 100],
+                backgroundColor: ["#4CAF50", "#2196F3", "#FFC107"],
+            },
+        ],
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            title: {
+                display: true,
+                text: "Transaction Types",
+            },
+        },
+    },
+})
+
+const categoryChart = new Chart(document.getElementById("categoryChart"), {
+    type: "polarArea",
+    data: {
+        labels: ["Food", "Transport", "Entertainment", "Bills", "Shopping"],
+        datasets: [
+            {
+                data: [250, 100, 150, 300, 200],
+                backgroundColor: ["#4CAF50", "#2196F3", "#FFC107", "#F44336", "#9C27B0"],
+            },
+        ],
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            title: {
+                display: true,
+                text: "Spending by Category",
+            },
+        },
+    },
+})
+
+const trendChart = new Chart(document.getElementById("trendChart"), {
+    type: "bar",
+    data: {
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+        datasets: [
+            {
+                label: "Income",
+                data: [1000, 1200, 1100, 1300, 1150, 1400],
+                backgroundColor: "#4CAF50",
+            },
+            {
+                label: "Expenses",
+                data: [900, 950, 1000, 1050, 1100, 1150],
+                backgroundColor: "#F44336",
+            },
+        ],
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            title: {
+                display: true,
+                text: "Income vs Expenses Trend",
+            },
+        },
+    },
+})
+
+const cashFlowChart = new Chart(document.getElementById("cashFlowChart"), {
+    type: "line",
+    data: {
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+        datasets: [
+            {
+                label: "Income",
+                data: [1000, 1200, 1100, 1300, 1150, 1400],
+                borderColor: "#4CAF50",
+                fill: false,
+            },
+            {
+                label: "Expenses",
+                data: [900, 950, 1000, 1050, 1100, 1150],
+                borderColor: "#F44336",
+                fill: false,
+            },
+        ],
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: "Cash Flow Analysis",
+            },
+        },
+    },
+})
+
+// Transactions
+const transactions = [
+    {
+        id: 1,
+        date: "2023-05-01",
+        amount: -50.0,
+        type: "Mobile Transfer",
+        category: "Food",
+        description: "Grocery shopping",
+    },
+    { id: 2, date: "2023-05-03", amount: -30.0, type: "Bank Transfer", category: "Transport", description: "Fuel" },
+    { id: 3, date: "2023-05-05", amount: 1000.0, type: "Bank Transfer", category: "Income", description: "Salary" },
+    {
+        id: 4,
+        date: "2023-05-07",
+        amount: -80.0,
+        type: "Mobile Transfer",
+        category: "Entertainment",
+        description: "Movie night",
+    },
+    {
+        id: 5,
+        date: "2023-05-10",
+        amount: -200.0,
+        type: "Bank Transfer",
+        category: "Bills",
+        description: "Electricity bill",
+    },
+]
+
+function createTransactionCard(transaction) {
+    const card = document.createElement("div")
+    card.classList.add("transaction-card")
+    card.innerHTML = `
+        <div>
+            <h3>${transaction.category}</h3>
+            <p>${transaction.date}</p>
+        </div>
+        <div class="transaction-amount ${transaction.amount > 0 ? "positive" : "negative"}">
+            ${transaction.amount > 0 ? "+" : ""}$${Math.abs(transaction.amount).toFixed(2)}
+        </div>
+        <div class="transaction-details">
+            <p><strong>Type:</strong> ${transaction.type}</p>
+            <p><strong>Description:</strong> ${transaction.description}</p>
+        </div>
+    `
+    card.addEventListener("click", () => {
+        const details = card.querySelector(".transaction-details")
+        details.style.display = details.style.display === "none" ? "block" : "none"
+    })
+    return card
+}
+
+const transactionList = document.querySelector("#transactions .transaction-list")
+transactions.forEach((transaction) => {
+    transactionList.appendChild(createTransactionCard(transaction))
+})
+
+// Search functionality
+const searchForm = document.getElementById("search-form")
+const searchCategory = document.getElementById("search-category")
+const searchInput = document.getElementById("search-input")
+const searchDate = document.getElementById("search-date")
+const searchType = document.getElementById("search-type")
+const searchResults = document.getElementById("search-results")
+
+searchCategory.addEventListener("change", () => {
+    searchInput.style.display = searchCategory.value === "amount" ? "inline-block" : "none"
+    searchDate.style.display = searchCategory.value === "date" ? "inline-block" : "none"
+    searchType.style.display = searchCategory.value === "type" ? "inline-block" : "none"
+})
+
+searchForm.addEventListener("submit", (e) => {
+    e.preventDefault()
+    let query
+    switch (searchCategory.value) {
+        case "date":
+            query = searchDate.value
+            break
+        case "amount":
+            query = searchInput.value
+            break
+        case "type":
+            query = searchType.value
+            break
     }
-}
 
-// Function to perform a search
-function performSearch() {
-    const searchInput = document.getElementById('search-input').value;
-    const searchResults = document.getElementById('search-results');
-    const resultsTitle = document.getElementById('results-title');
-    const resultsTable = document.getElementById('results-table');
-
-    // Show the table and title
-    resultsTitle.style.display = 'block';
-    resultsTable.style.display = 'table';
-
-    // Clear previous results
-    const tableBody = resultsTable.querySelector('tbody');
-    tableBody.innerHTML = '';
-
-    // Simulate search results (dummy data)
-    const dummyData = [
-        { id: 1, date: '2023-10-01', type: 'Payment', amount: 100, sender: 'User A' },
-        { id: 2, date: '2023-10-02', type: 'Deposit', amount: 200, sender: 'User B' },
-        { id: 3, date: '2023-10-03', type: 'Withdrawal', amount: 50, sender: 'User C' },
-    ];
-
-    // Add rows to the table
-    dummyData.forEach((item) => {
-        const row = document.createElement('tr');
-
-        // Add Transaction ID
-        const idCell = document.createElement('td');
-        idCell.textContent = item.id;
-        row.appendChild(idCell);
-
-        // Add Date
-        const dateCell = document.createElement('td');
-        dateCell.textContent = item.date;
-        row.appendChild(dateCell);
-
-        // Add Type
-        const typeCell = document.createElement('td');
-        typeCell.textContent = item.type;
-        row.appendChild(typeCell);
-
-        // Add Amount
-        const amountCell = document.createElement('td');
-        amountCell.textContent = `$${item.amount}`;
-        row.appendChild(amountCell);
-
-        // Add Sender
-        const senderCell = document.createElement('td');
-        senderCell.textContent = item.sender;
-        row.appendChild(senderCell);
-
-        // Add the row to the table
-        tableBody.appendChild(row);
-    });
-}
-
-// Function to toggle the search dropdown
-function toggleSearchDropdown(event) {
-    event.preventDefault(); // Prevent default link behavior
-
-    const searchMenu = document.getElementById('search-menu');
-    const submenu = searchMenu.querySelector('.submenu');
-
-    // Toggle the submenu visibility
-    if (submenu) {
-        submenu.classList.toggle('active');
-    }
-}
-
-// Function to render charts for the Reports section
-function renderCharts() {
-    // Dummy data for the charts
-    const transactionVolumeData = {
-        labels: ['Payments', 'Deposits', 'Withdrawals'],
-        datasets: [{
-            label: 'Transaction Volume',
-            data: [40, 35, 25], // Example data
-            backgroundColor: ['#0033a0', '#ffcc00', '#00688f'], // MTN colors
-        }]
-    };
-
-    const monthlySummaryData = {
-        labels: ['January', 'February', 'March', 'April', 'May'],
-        datasets: [{
-            label: 'Total Transactions',
-            data: [10000, 15000, 12000, 18000, 20000], // Example data
-            backgroundColor: '#0033a0', // Blue
-        }]
-    };
-
-    const topTransactionsData = {
-        labels: ['Transaction 1', 'Transaction 2', 'Transaction 3', 'Transaction 4', 'Transaction 5'],
-        datasets: [{
-            label: 'Amount',
-            data: [5000, 4500, 4000, 3500, 3000], // Example data
-            backgroundColor: '#ffcc00', // Yellow
-        }]
-    };
-
-    // Render Transaction Volume Chart (Pie Chart)
-    const ctx1 = document.getElementById('transactionVolumeChart').getContext('2d');
-    new Chart(ctx1, {
-        type: 'pie',
-        data: transactionVolumeData,
-        options: {
-            responsive: true,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Transaction Volume by Type'
-                }
-            }
+    const filteredTransactions = transactions.filter((transaction) => {
+        switch (searchCategory.value) {
+            case "date":
+                return transaction.date === query
+            case "amount":
+                return transaction.amount.toString().includes(query)
+            case "type":
+                return transaction.type === query
+            default:
+                return false
         }
-    });
+    })
 
-    // Render Monthly Summary Chart (Bar Chart)
-    const ctx2 = document.getElementById('monthlySummaryChart').getContext('2d');
-    new Chart(ctx2, {
-        type: 'bar',
-        data: monthlySummaryData,
-        options: {
-            responsive: true,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Monthly Transaction Summary'
-                }
-            }
-        }
-    });
+    searchResults.innerHTML = ""
+    filteredTransactions.forEach((transaction) => {
+        searchResults.appendChild(createTransactionCard(transaction))
+    })
+})
 
-    // Render Top Transactions Chart (Bar Chart)
-    const ctx3 = document.getElementById('topTransactionsChart').getContext('2d');
-    new Chart(ctx3, {
-        type: 'bar',
-        data: topTransactionsData,
-        options: {
-            responsive: true,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Top 5 Transactions'
-                }
-            }
-        }
-    });
-}
-
-// Event listeners
-document.addEventListener('DOMContentLoaded', function () {
-    // Add click event to the search menu to toggle the dropdown
-    const searchMenu = document.getElementById('search-menu');
-    if (searchMenu) {
-        searchMenu.addEventListener('click', toggleSearchDropdown);
-    }
-
-    // Add click events to the dropdown items
-    document.querySelectorAll('.submenu a').forEach((link) => {
-        link.addEventListener('click', function (event) {
-            event.preventDefault(); // Prevent default link behavior
-            const section = this.textContent.trim(); // Get the section name
-            showContent(section); // Show the corresponding content
-        });
-    });
-
-    // Add click event to the Report link
-    const reportLink = document.querySelector('a[onclick="showContent(\'Report\')"]');
-    if (reportLink) {
-        reportLink.addEventListener('click', function (event) {
-            event.preventDefault(); // Prevent default link behavior
-            showContent('Report'); // Show the Report section
-            renderCharts(); // Render the charts
-        });
-    }
-});

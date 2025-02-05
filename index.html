@@ -3,93 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MTN-Inspired Webpage</title>
+    <title>Finance Dashboard</title>
     <link rel="stylesheet" href="/style/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://kit.fontawesome.com/aeb50c1fe0.js" crossorigin="anonymous"></script>
 </head>
 <body>
-
-<!-- Navbar -->
 <nav>
-    <div class="logo">
-        <img src="/assets/logo.jpg" alt="MTN Logo">
-    </div>
+    <ul>
+        <li><a href="#search"><i class="fas fa-search"></i> Search</a></li>
+        <li><a href="#overview" class="active"><i class="fas fa-chart-pie"></i> Overview</a></li>
+        <li><a href="#transactions"><i class="fas fa-list"></i> Transactions</a></li>
+        <li><a href="#analysis"><i class="fas fa-chart-line"></i> Analysis</a></li>
+    </ul>
 </nav>
 
-<!-- Main Content -->
-<div class="container">
-    <!-- Left Sidebar -->
-    <div class="sidebar">
-        <ul>
-            <li id="search-menu">
-                <a href="#">Search</a>
-                <ul class="submenu">
-                    <li><a href="#" onclick="showContent('Date')">Date</a></li>
-                    <li><a href="#" onclick="showContent('Amount')">Amount</a></li>
-                    <li><a href="#" onclick="showContent('Transaction Type')">Transaction Type</a></li>
+<main>
+    <section id="search">
+        <h2><i class="fas fa-search"></i> Search Transactions</h2>
+        <form id="search-form">
+            <select id="search-category">
+                <option value="date">Date</option>
+                <option value="amount">Amount</option>
+                <option value="type">Type</option>
+            </select>
+            <input type="text" id="search-input" placeholder="Enter search term">
+            <input type="date" id="search-date" style="display:none;">
+            <select id="search-type" style="display:none;">
+                <option value="Mobile Transfer">Mobile Transfer</option>
+                <option value="Bank Transfer">Bank Transfer</option>
+                <option value="Cash">Cash</option>
+            </select>
+            <button type="submit"><i class="fas fa-search"></i> Search</button>
+        </form>
+        <div id="search-results" class="transaction-list">
+            <!-- Search results will be dynamically added here -->
+        </div>
+    </section>
 
-                </ul>
-            </li>
-            <li><a href="#" onclick="showContent('Report')">Report</a></li>
-            <li><a href="#" onclick="showContent('help')">Help</a></li>
-        </ul>
-    </div>
-
-
-    <!-- Right Content -->
-    <div class="content">
-        <div id="search-content" class="content-section">
-            <input type="text" id="search-input" placeholder="Enter your search...">
-            <button onclick="performSearch()">Search</button>
-            <div id="search-results">
-                <!-- Table Title -->
-                <h3 id="results-title" style="display: none;">Search Results</h3>
-
-                <!-- Table Structure -->
-                <table id="results-table" style="display: none;">
-                    <thead>
-                    <tr>
-                        <th>Transaction ID</th>
-                        <th>Date</th>
-                        <th>Type</th>
-                        <th>Amount</th>
-                        <th>Sender</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <!-- Rows will be dynamically added here -->
-                    </tbody>
-                </table>
+    <section id="overview" class="active">
+        <h2><i class="fas fa-chart-pie"></i> Overview</h2>
+        <div class="balance">
+            <h3>Current Balance</h3>
+            <p>$5,234.56</p>
+        </div>
+        <div class="charts">
+            <div class="chart-container">
+                <canvas id="transactionTypeChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="trendChart"></canvas>
             </div>
         </div>
-        <div id="report-content" class="content-section" style="display: none;">
-            <h2>Reports</h2>
+    </section>
 
-            <!-- Graph 1: Total Transaction Volume by Type -->
-            <div class="chart-container">
-                <h3>Total Transaction Volume by Type</h3>
-                <canvas id="transactionVolumeChart"></canvas>
-            </div>
-
-            <!-- Graph 2: Monthly Transaction Summary -->
-            <div class="chart-container">
-                <h3>Monthly Transaction Summary</h3>
-                <canvas id="monthlySummaryChart"></canvas>
-            </div>
-
-            <!-- Graph 3: Top 5 Transactions -->
-            <div class="chart-container">
-                <h3>Top 5 Transactions</h3>
-                <canvas id="topTransactionsChart"></canvas>
-            </div>
+    <section id="transactions">
+        <h2><i class="fas fa-list"></i> Transactions</h2>
+        <div class="transaction-list">
+            <!-- Transaction cards will be dynamically added here -->
         </div>
-        <div id="help-content" class="content-section" style="display: none;">
-            <h2>Help</h2>
-            <p>This is the help section.</p>
+    </section>
+
+    <section id="analysis">
+        <h2><i class="fas fa-chart-line"></i> Analysis</h2>
+        <div class="chart-container">
+            <canvas id="cashFlowChart"></canvas>
         </div>
-    </div>
-</div>
+    </section>
+</main>
 
 <script src="/style/script.js"></script>
 </body>
 </html>
+
