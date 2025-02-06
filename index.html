@@ -19,28 +19,30 @@
 </nav>
 
 <main>
-    <section id="search" class="active">
+    <div class="dashboard-container">
+        <section id="search" class="active">
+            <h2><i class="fas fa-search"></i> Search Transactions</h2>
+            <form id="search-form">
+                <select id="search-category">
+                    <option value="date">Date</option>
+                    <option value="amount">Amount</option>
+                    <option value="type">Type</option>
+                </select>
+                <input type="text" id="search-input" placeholder="Enter search term">
+                <input type="date" id="search-date" style="display:none;">
+                <select id="search-type" style="display:none;">
+                    <option value="Mobile Transfer">Mobile Transfer</option>
+                    <option value="Bank Transfer">Bank Transfer</option>
+                    <option value="Cash">Cash</option>
+                </select>
+                <button type="submit"><i class="fas fa-search"></i> Search</button>
+            </form>
+            <div id="search-results" class="transaction-list">
+                <!-- Search results will be dynamically added here -->
+            </div>
+        </section>
         <h1 class="hero-text">MTN DASHBOARD</h1>
-        <h2><i class="fas fa-search"></i> Search Transactions</h2>
-        <form id="search-form">
-            <select id="search-category">
-                <option value="date">Date</option>
-                <option value="amount">Amount</option>
-                <option value="type">Type</option>
-            </select>
-            <input type="text" id="search-input" placeholder="Enter search term">
-            <input type="date" id="search-date" style="display:none;">
-            <select id="search-type" style="display:none;">
-                <option value="Mobile Transfer">Mobile Transfer</option>
-                <option value="Bank Transfer">Bank Transfer</option>
-                <option value="Cash">Cash</option>
-            </select>
-            <button type="submit"><i class="fas fa-search"></i> Search</button>
-        </form>
-        <div id="search-results" class="transaction-list">
-            <!-- Search results will be dynamically added here -->
-        </div>
-    </section>
+    </div>
 
     <section id="overview">
         <h2><i class="fas fa-chart-pie"></i> Overview</h2>
@@ -70,19 +72,22 @@
 
     <section id="analysis">
         <h2><i class="fas fa-chart-line"></i> Analysis</h2>
-        <div class="chart-container">
-            <canvas id="cashFlowChart"></canvas>
-        </div>
-        <div class="chatbot-container">
-            <div class="chatbot-messages" id="chatbot-messages">
-                <!-- Chat messages will be dynamically added here -->
+        <div class="analysis-container">
+            <div class="chart-container">
+                <canvas id="cashFlowChart"></canvas>
             </div>
-            <form id="chatbot-form">
-                <input type="text" id="chatbot-input" placeholder="Ask a question about your finances...">
-                <button type="submit"><i class="fas fa-paper-plane"></i></button>
-            </form>
+            <div class="chatbot-container">
+                <div class="chatbot-messages" id="chatbot-messages">
+                    <!-- Chat messages will be dynamically added here -->
+                </div>
+                <form id="chatbot-form">
+                    <input type="text" id="chatbot-input" placeholder="Ask a question about your finances...">
+                    <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                </form>
+            </div>
         </div>
     </section>
+
 </main>
 
 <script src="/style/script.js"></script>
