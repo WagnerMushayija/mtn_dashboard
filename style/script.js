@@ -13,9 +13,8 @@ navLinks.forEach((link) => {
 })
 
 // Charts
-// Import Chart.js
-// Assuming Chart.js is included in your HTML file via a <script> tag
-// If not, include it before this script.js file.
+// Import Chart.js library.  This assumes Chart.js is included in your HTML file via a <script> tag.
+// If not, you'll need to include it, for example: <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 const transactionTypeChart = new Chart(document.getElementById("transactionTypeChart"), {
     type: "doughnut",
@@ -36,6 +35,10 @@ const transactionTypeChart = new Chart(document.getElementById("transactionTypeC
                 display: true,
                 text: "Transaction Types",
             },
+        },
+        animation: {
+            animateScale: true,
+            animateRotate: true,
         },
     },
 })
@@ -59,6 +62,10 @@ const categoryChart = new Chart(document.getElementById("categoryChart"), {
                 display: true,
                 text: "Spending by Category",
             },
+        },
+        animation: {
+            animateScale: true,
+            animateRotate: true,
         },
     },
 })
@@ -89,6 +96,10 @@ const trendChart = new Chart(document.getElementById("trendChart"), {
                 text: "Income vs Expenses Trend",
             },
         },
+        animation: {
+            duration: 1000,
+            easing: "easeOutQuart",
+        },
     },
 })
 
@@ -118,6 +129,10 @@ const cashFlowChart = new Chart(document.getElementById("cashFlowChart"), {
                 display: true,
                 text: "Cash Flow Analysis",
             },
+        },
+        animation: {
+            duration: 1000,
+            easing: "easeOutQuart",
         },
     },
 })
@@ -226,5 +241,50 @@ searchForm.addEventListener("submit", (e) => {
     filteredTransactions.forEach((transaction) => {
         searchResults.appendChild(createTransactionCard(transaction))
     })
+})
+
+// Chatbot functionality
+const chatbotForm = document.getElementById("chatbot-form")
+const chatbotInput = document.getElementById("chatbot-input")
+const chatbotMessages = document.getElementById("chatbot-messages")
+
+chatbotForm.addEventListener("submit", (e) => {
+    e.preventDefault()
+    const message = chatbotInput.value.trim()
+    if (message) {
+        addChatMessage("user", message)
+        chatbotInput.value = ""
+        // Simulated bot response (replace with actual API call)
+        setTimeout(() => {
+            addChatMessage("bot", "Thank you for your message. I'm processing your request.")
+        }, 1000)
+    }
+})
+
+function addChatMessage(sender, message) {
+    const messageElement = document.createElement("div")
+    messageElement.classList.add("chat-message", sender)
+    messageElement.textContent = message
+    chatbotMessages.appendChild(messageElement)
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight
+}
+
+// Add some initial animations
+document.addEventListener("DOMContentLoaded", () => {
+    const heroText = document.querySelector(".hero-text")
+    heroText.style.opacity = "0"
+    heroText.style.transform = "translateY(-20px)"
+    setTimeout(() => {
+        heroText.style.transition = "opacity 0.5s, transform 0.5s"
+        heroText.style.opacity = "1"
+        heroText.style.transform = "translateY(0)"
+    }, 100)
+
+    const balanceAmount = document.querySelector(".balance-amount")
+    balanceAmount.style.opacity = "0"
+    setTimeout(() => {
+        balanceAmount.style.transition = "opacity 0.5s"
+        balanceAmount.style.opacity = "1"
+    }, 500)
 })
 
